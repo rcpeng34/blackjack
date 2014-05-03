@@ -3,10 +3,12 @@ class window.Hand extends Backbone.Collection
   model: Card
 
   initialize: (array, @deck, @isDealer) ->
+    busted: false
 
   hit: ->
     @add(@deck.pop()).last()
     if @scores()[0] > 21
+      console.log("line 10")
       @bust()
 
   scores: ->
@@ -21,10 +23,11 @@ class window.Hand extends Backbone.Collection
     , 0
     if hasAce then [score, score + 10] else [score]
 
-  busted: false
-
   bust: ->
-    @set('busted', true)
+    console.log(@)
+    # @set('busted', true)
+    @busted = true;
+    console.log("line 29")
     @trigger("bust", @)
 
   stand: ->
@@ -34,6 +37,6 @@ class window.Hand extends Backbone.Collection
     @at(0).flip()
     while @scores()[1] <17 or (@scores()[0]<17 and (not @scores()[1] or @scores()[1]>21))
       @hit()
-    if not @get('busted')
+    if not @busted
       @stand()
 
