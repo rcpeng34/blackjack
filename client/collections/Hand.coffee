@@ -40,3 +40,8 @@ class window.Hand extends Backbone.Collection
     if not @busted
       @stand()
 
+  bestScore: ->
+    handScores = @scores()
+    if handScores[1] > 21 or !handScores[1]
+      handScores[0]
+    else handScores[1]

@@ -5,10 +5,6 @@ class window.HandView extends Backbone.View
   #todo: switch to mustache
   template: _.template '<h2><% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score"></span>)</h2>'
 
-  events:
-    "click .stand-button": ->
-      @model.stand()
-
   initialize: ->
     @collection.on 'add remove change', => @render()
     @render()
