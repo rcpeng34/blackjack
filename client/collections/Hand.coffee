@@ -6,6 +6,8 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     @add(@deck.pop()).last()
+    if @scores()[0] > 21
+      @bust()
 
   scores: ->
     # The scores are an array of potential scores.
@@ -19,6 +21,19 @@ class window.Hand extends Backbone.Collection
     , 0
     if hasAce then [score, score + 10] else [score]
 
+  busted: false
+
+  bust: ->
+    @set('busted', true)
+    @trigger("bust", @)
+
   stand: ->
-    @.trigger("stand", @)
+    @trigger("stand", @)
+
+  playDealer: ->
+    @at(0).flip()
+    while @scores()[1] <17 or (@scores()[0]<17 and (not @scores()[1] or @scores()[1]>21))
+      @hit()
+    if not @get('busted')
+      @stand()
 
