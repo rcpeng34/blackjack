@@ -8,7 +8,6 @@ class window.Hand extends Backbone.Collection
   hit: ->
     @add(@deck.pop()).last()
     if @scores()[0] > 21
-      console.log("line 10")
       @bust()
 
   scores: ->
@@ -24,10 +23,7 @@ class window.Hand extends Backbone.Collection
     if hasAce then [score, score + 10] else [score]
 
   bust: ->
-    console.log(@)
-    # @set('busted', true)
     @busted = true;
-    console.log("line 29")
     @trigger("bust", @)
 
   stand: ->

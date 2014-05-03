@@ -2,12 +2,15 @@
 class window.App extends Backbone.Model
 
   initialize: ->
+    @set 'playerChips', 100
     @newGame()
 
   newGame: ->
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
+    @set 'currentBet', 10
+    @set 'playerChips', @get('playerChips') - @get('currentBet')
 
     @get('playerHand').on 'bust', (hand) =>
       @playerLoses()
@@ -21,12 +24,17 @@ class window.App extends Backbone.Model
     @trigger('newGame', @)
 
   playerWins: ->
+    @set 'playerChips', @get('playerChips') + @get('currentBet') * 2
+    @trigger('gameEnded', @)
     alert "You win, play again"
 
   playerLoses: ->
+    @trigger('gameEnded', @)
     alert "You lose, play again"
 
   playerPushes: ->
+    @set 'playerChips', @get('playerChips') + @get('currentBet')
+    @trigger('gameEnded', @)
     alert "You pushed, play again"
 
   checkScores: ->
