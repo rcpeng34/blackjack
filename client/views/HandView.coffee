@@ -5,6 +5,10 @@ class window.HandView extends Backbone.View
   #todo: switch to mustache
   template: _.template '<h2><% if(isDealer){ %>Dealer<% }else{ %>You<% } %> (<span class="score"></span>)</h2>'
 
+  events:
+    "click .stand-button": ->
+      @model.stand()
+
   initialize: ->
     @collection.on 'add remove change', => @render()
     @render()
@@ -14,5 +18,8 @@ class window.HandView extends Backbone.View
     @$el.html @template @collection
     @$el.append @collection.map (card) ->
       new CardView(model: card).$el
-    @$('.score').text @collection.scores()[0]
+    # if there's an ace and sum2 <= 21, show it
+    secondScore = @collection.scores()[1]
+    secondScoreText = if secondScore and secondScore <= 21 then " or " + secondScore else ""
+    @$('.score').text @collection.scores()[0] + secondScoreText
 
