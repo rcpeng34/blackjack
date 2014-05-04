@@ -1,9 +1,11 @@
 class window.AppView extends Backbone.View
 
+  className: 'poker-table'
+
   template: _.template '
-    <button class="hit-button">Hit</button>
-    <button class="stand-button">Stand</button>
-    <button class="newgame-button">New Game</button>
+    <button class="hit-button btn btn-default">Hit</button>
+    <button class="stand-button btn btn-default">Stand</button>
+    <button class="newgame-button btn btn-default">New Game</button>
     <div class="player-stack">Current Chips: <%= playerChips %></div>
     <div class="current-bet">Current Bet: <%= currentBet %></div>
     <div class="player-hand-container"></div>

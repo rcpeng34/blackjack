@@ -2,7 +2,11 @@ class window.CardView extends Backbone.View
 
   className: 'card'
 
-  template: _.template '<%= rankName %> of <%= suitName %>'
+  # template: _.template '<%= rankName %> of <%= suitName %>'
+  # rankName %>-<%= suitName %>.png">
+
+  template: _.template '
+  <img src="img/cards/<% if (revealed){%><%= rankName %>-<%= suitName %><%} else {%>card-back<%} %>.png"></img>'
 
   initialize: ->
     @model.on 'change', => @render
